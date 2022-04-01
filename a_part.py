@@ -20,7 +20,7 @@ class lab3(MRJob):
             if len(fields) == 7:
                 timestamp = dt.fromtimestamp(int(fields[6]))
                 mth_yr = f"{timestamp.month}/{timestamp.year}"
-                yield(mth_yr, (fields[3], 1))
+                yield(mth_yr, (int(fields[3]), 1))
         except:
             pass
 
@@ -46,5 +46,3 @@ class lab3(MRJob):
 
 if __name__ == '__main__':
     lab3.run()
-
-job_1648683650522_0840
