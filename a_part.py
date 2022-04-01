@@ -1,71 +1,47 @@
-"""Lab 3. Basic wordcount
-
 """
+Create a bar plot showing the number of transactions occurring every month between the start and end
+of the dataset. Create a bar plot showing the average value of transactions in each month between 
+the start and end of the dataset. Note: As the dataset spans multiple years and you are aggregating
+together all transactions in the same month, make sure to include the year in your analysis.
 
+Note: Once the raw results have been processed within Hadoop/Spark you may create your bar plot in 
+any software of your choice (excel, python, R, etc.)
+"""
 from mrjob.job import MRJob
+from datetime import datetime as dt
 
-
-#This line declares the class lab3, which extends the MRJob format.
 
 class lab3(MRJob):
-
-
     def mapper(self, _, line):
 
-        fields = line.split(";")
+        fields = line.split(",")
 
         try:
-
-            if len(fields)==4:
-
-                yield('length', (len(fields[2]), 1))
-
-                yield('hashtags', (fields[2].count('#'), 1))
-
+            if len(fields) == 7:
+                mth_yr = dt.fromtimestamp(int(fields[6]))
+                yield(str(mth_yr), (float(value), 1))
         except:
-
             pass
 
-
-    def combiner(self, key, counts):
-
+    def combiner(self, key, values):
         count = 0
-
         total = 0
-
-        for val in counts:
-
-            count += val[1]
-
+        for val in values:
             total += val[0]
+            count += val[1]
+        yield(key, (total, count))
 
-        yield(key, (count, total))
-
-
-    def reducer(self, key, counts):
-
+    def reducer(self, key, values):
         count = 0
-
         total = 0
-
-        for val in counts:
-
-            count += val[1]
-
+        for val in values:
             total += val[0]
-
-        yield(key, (count, total))
+            count += val[1]
+        yield(key, (total, count))
 
 # this class will define two additional methods: the mapper method goes here
-
-
-#and the reducer method goes after this line
-
-
-
-#this part of the python script tells to actually run the defined MapReduce job. Note that lab3 is the name of the class
+# and the reducer method goes after this line
+# this part of the python script tells to actually run the defined MapReduce job. Note that lab3 is the name of the class
 
 if __name__ == '__main__':
-
     lab3.run()
-
