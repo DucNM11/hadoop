@@ -18,8 +18,9 @@ class lab3(MRJob):
 
         try:
             if len(fields) == 7:
-                mth_yr = dt.fromtimestamp(int(fields[6]))
-                yield(str(mth_yr), (float(value), 1))
+                timestamp = dt.fromtimestamp(int(fields[6]))
+                mth_yr = f"{timestamp.month}/{timestamp.year}"
+                yield(mth_yr, (float(fields[3]), 1))
         except:
             pass
 
