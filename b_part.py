@@ -12,7 +12,7 @@ from mrjob.job import MRJob
 from datetime import datetime as dt
 
 
-class part_a(MRJob):
+def part_b(MRJob):
 
     def mapper(self, _, line):
 
@@ -20,32 +20,16 @@ class part_a(MRJob):
 
         try:
             if len(fields) == 7:
-                timestamp = dt.fromtimestamp(int(fields[6]))
-                mth_yr = f"{timestamp.month}/{timestamp.year}"
-                yield (mth_yr, (int(fields[3]), 1))
+                yield (to_address, int(fields[3]))
         except:
             pass
 
     def combiner(self, key, values):
-
-        count = 0
-        total = 0
-
-        for val in values:
-            total += val[0]
-            count += val[1]
-        yield (key, (total, count))
+        yield (key, sum(values))
 
     def reducer(self, key, values):
-
-        count = 0
-        total = 0
-
-        for val in values:
-            total += val[0]
-            count += val[1]
-        yield (key, (total, count))
+        yield (key, sum(values))
 
 
 if __name__ == '__main__':
-    part_a.run()
+    part_b.run()
