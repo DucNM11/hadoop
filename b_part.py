@@ -12,7 +12,7 @@ from mrjob.job import MRJob
 from datetime import datetime as dt
 
 
-def part_b(MRJob):
+class part_b(MRJob):
 
     def mapper(self, _, line):
 
