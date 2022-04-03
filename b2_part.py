@@ -14,7 +14,7 @@ class top_amt(MRJob):
         with open('out_b.txt') as f:
             for line in f:
                 fields = line.split(' ')
-                add = fields[0]
+                add = fields[0].replace('\"', '')
                 val = fields[1]
                 self.value_list[add] = val
 
