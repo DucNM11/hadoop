@@ -24,7 +24,7 @@ class top_amt(MRJob):
         yield (key, sum(values))
 
     def reducer(self, key, values):
-        yield (key, sum(values))
+        yield (None, (key, sum(values)))
 
     def reducer_top(self, key, values):
         sorted_values = sorted(values, reverse=True, key=lambda tup: tup[2])
