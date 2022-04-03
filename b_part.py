@@ -20,7 +20,9 @@ class part_b(MRJob):
 
         try:
             if len(fields) == 7:
-                yield (to_address, int(fields[3]))
+                val = int(fields[3])
+                if val != 0:
+                    yield (fields[2], val)
         except:
             pass
 
