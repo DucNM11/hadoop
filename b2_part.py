@@ -13,9 +13,9 @@ class top_amt(MRJob):
     def mapper_join(self):
         with open('out_b.txt') as f:
             for line in f:
-                fields = line.split(' ')
+                fields = line.split('\t')
                 add = fields[0].replace('\"', '')
-                val = fields[1]
+                val = int(fields[1])
                 self.value_list[add] = val
 
     def mapper(self, _, line):
