@@ -23,23 +23,23 @@ class top_amt(MRJob):
             fields = line.split(',')
             if len(fields) == 5:
                 contract = fields[0]
-                if self.value_list[contract] != None:
-                    yield (contract, self.value_list[contract])
+                if contract in self.value_list:
+                    yield (None, (contract, self.value_list[contract]))
         except:
             pass
 
     def combiner(self, key, values):
-        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[2])
+        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
         i = 0
 
         for val in sorted_values:
-            yield (key, val)
+            yield (None, (val[0], val[1]))
             i += 1
             if i >= 10:
                 break
 
     def reducer(self, key, values):
-        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[2])
+        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
         i = 0
 
         for val in sorted_values:
