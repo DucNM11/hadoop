@@ -26,13 +26,15 @@ class top_amt(MRJob):
         for value in values:
             if value[0] == 'C':
                 flag = True
+                break
 
         if flag:
             total_value = 0
             for value in values:
                 if value[0] == 'T':
                     total_value += value[1]
-            yield (key, total_value)
+            if total_value != 0:
+                yield (key, total_value)
 
     # def reducer_sort(self, key, values):
     #     sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
