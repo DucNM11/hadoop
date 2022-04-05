@@ -9,7 +9,6 @@ Note: Once the raw results have been processed within Hadoop/Spark you may creat
 any software of your choice (excel, python, R, etc.)
 """
 from mrjob.job import MRJob
-from datetime import datetime as dt
 
 
 class part_b(MRJob):
@@ -19,18 +18,11 @@ class part_b(MRJob):
         fields = line.split(",")
 
         try:
-            if len(fields) == 7:
-                val = int(fields[3])
-                if val != 0:
-                    yield (fields[2], val)
+            if len(fields) == 5:
+                yield (fields[0], None)
+
         except:
             pass
-
-    def combiner(self, key, values):
-        yield (key, sum(values))
-
-    def reducer(self, key, values):
-        yield (key, sum(values))
 
 
 if __name__ == '__main__':
