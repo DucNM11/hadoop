@@ -20,14 +20,14 @@ class top_amt(MRJob):
         except:
             pass
 
-    # def reducer(self, key, values):
-    #     contracts = []
-    #     for value in values:
-    #         if value[0] == 'C':
-    #             contracts.append(key)
+    def reducer(self, key, values):
+        contracts = []
+        for value in values:
+            if value[0] == 'C':
+                contracts.append(key)
 
-    #         if value[0] == 'T' & key in contracts:
-    #             yield (key, value[])
+            if value[0] == 'T' & key in contracts:
+                yield (key, sum(value[1]))
 
     # def reducer_sort(self, key, values):
     #     sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
