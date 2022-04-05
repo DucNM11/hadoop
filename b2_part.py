@@ -3,58 +3,41 @@
 An outline of the subtasks required to extract this information is provided below,
 focusing on a MRJob based approach. This is, however, is not the only way to
 complete the task, as there are several other viable ways of completing this assignment."""
-from mrjob.job import MRJob, MRStep
+from mrjob.job import MRJob
 
 
 class top_amt(MRJob):
-
-    value_list = {}
-
-    def mapper_join(self):
-        with open('out_b.txt') as f:
-            for line in f:
-                fields = line.split('\t')
-                add = fields[0].replace('\"', '')
-                val = int(fields[1])
-                self.value_list[add] = val
 
     def mapper(self, _, line):
         try:
             fields = line.split(',')
             if len(fields) == 5:
-                contract = fields[0]
-                if contract in self.value_list:
-                    yield (None, (contract, self.value_list[contract]))
+                symbol = 'C'
+                yield (fields[0], [symbol, None])
+            else:
+                symbol = 'T'
+                yield (fields[2], [symbol, int(fields[3])])
         except:
             pass
 
-    def combiner(self, key, values):
-        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
-        i = 0
+    # def reducer(self, key, values):
+    #     contracts = []
+    #     for value in values:
+    #         if value[0] == 'C':
+    #             contracts.append(key)
 
-        for val in sorted_values:
-            yield (None, (val[0], val[1]))
-            i += 1
-            if i >= 10:
-                break
+    #         if value[0] == 'T' & key in contracts:
+    #             yield (key, value[])
 
-    def reducer(self, key, values):
-        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
-        i = 0
+    # def reducer_sort(self, key, values):
+    #     sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
+    #     i = 0
 
-        for val in sorted_values:
-            yield (val[0], val[1])
-            i += 1
-            if i >= 10:
-                break
-
-    def steps(self):
-        return [
-            MRStep(mapper_init=self.mapper_join,
-                   mapper=self.mapper,
-                   combiner=self.combiner,
-                   reducer=self.reducer)
-        ]
+    #     for val in sorted_values:
+    #         yield (val[0], val[1])
+    #         i += 1
+    #         if i >= 10:
+    #             break
 
 
 if __name__ == '__main__':
