@@ -4,11 +4,13 @@ An outline of the subtasks required to extract this information is provided belo
 focusing on a MRJob based approach. This is, however, is not the only way to
 complete the task, as there are several other viable ways of completing this assignment."""
 from mrjob.job import MRJob
+from mrjob.step import MRStep
 
 
 class top_amt(MRJob):
 
     def mapper(self, _, line):
+
         try:
             fields = line.split(',')
             if len(fields) == 5:
@@ -34,17 +36,25 @@ class top_amt(MRJob):
                 if value[0] == 'T':
                     total_value += value[1]
             if total_value != 0:
-                yield (key, total_value)
+                yield (None, (key, total_value))
 
-    # def reducer_sort(self, key, values):
-    #     sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
-    #     i = 0
+    def reducer_sort(self, key, values):
 
-    #     for val in sorted_values:
-    #         yield (val[0], val[1])
-    #         i += 1
-    #         if i >= 10:
-    #             break
+        sorted_values = sorted(values, reverse=True, key=lambda tup: tup[1])
+
+        i = 0
+        for val in sorted_values:
+            yield (val[0], val[1])
+            i += 1
+            if i >= 10:
+                break
+
+    def steps(self):
+
+        return [
+            MRStep(mapper=self.mapper, reducer=self.reducer),
+            MRStep(reducer=self.reducer_sort)
+        ]
 
 
 if __name__ == '__main__':
