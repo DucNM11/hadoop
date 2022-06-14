@@ -1,0 +1,24 @@
+[["Fake ICO", "Offline"], "sum"],1356457566889629979678
+[["Fake ICO", "Offline"], "count"],121
+[["Fake ICO", "Offline"], "avg"],"11210393114790330368.000"
+[["Phishing", "Inactive"], "sum"], 14886777707995030337
+[["Phishing", "Inactive"], "count"], 22
+[["Phishing", "Inactive"], "avg"], "676671713999774080.000"
+[["Phishing", "Offline"], "sum"],37454027492737988203141
+[["Phishing", "Offline"], "count"],10100
+[["Phishing", "Offline"], "avg"],"3708319553736434688.000"
+[["Phishing", "Suspended"], "sum"],1639908130000000000
+[["Phishing", "Suspended"], "count"],11
+[["Phishing", "Suspended"], "avg"],"149082557272727264.000"
+[["Scamming", "Active"], "sum"], 22612205279194883345386
+[["Scamming", "Active"], "count"], 89073
+[["Scamming", "Active"], "avg"], "253861498761632416.000"
+[["Phishing", "Active"], "sum"], 6256455846464804135847
+[["Phishing", "Active"], "count"], 3178
+[["Phishing", "Active"], "avg"], "1968677107131782400.000"
+[["Scamming", "Offline"], "sum"],22099890651296288506280
+[["Scamming", "Offline"], "count"],30335
+[["Scamming", "Offline"], "avg"],"728527794669401344.000"
+[["Scamming", "Suspended"], "sum"],3710167950000000000
+[["Scamming", "Suspended"], "count"],56
+[["Scamming", "Suspended"], "avg"],"66252999107142856.000"
